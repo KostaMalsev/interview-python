@@ -3,6 +3,13 @@
 <script>
 
 
+let deck_count = deck_count;
+
+let url = "https://www.deckofcardsapi.com/api/deck/new/shuffle/?" + deck_count;
+
+fetch(url)
+.then(response => response.json( ))
+.then(json => console.log(response.json( ))
 
 
 
