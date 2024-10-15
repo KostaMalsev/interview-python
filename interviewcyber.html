@@ -4,25 +4,81 @@
 
 
 
-async function getDeck(deck_count=1){
-  
+async function shuflleDeck(deck_count=1){
   
   let url = "https://www.deckofcardsapi.com/api/deck/new/shuffle/?" + deck_count;
   
-  try{
-    let resp  = await fetch(url);
-  }catch{
-    console.log(e)
-  }
-    
-  let jsonresp = await resp.json()
-  console.log(jsonresp["success"])
+  let resp = "";
   
-  return resp;
+  let jsonresp = null;
+  
+  try{
+      resp  = await fetch(url);
+      jsonresp = await resp.json()
+ }catch (error) {
+      console.error(error);
+ }
+
+  return jsonresp;
     
 }
 
-let resp =  getDeck();
+
+async function drawCardFromDeck(deck_id,deck_count=2){
+  
+  let url = `https://www.deckofcardsapi.com/api/deck/${deck_id}/draw/?count=${deck_count}`
+  let resp = "";
+  
+  let jsonresp = null;
+  
+  try{
+      resp  = await fetch(url);
+      jsonresp = await resp.json()
+   }catch (error) {
+        console.error(error);
+   }
+  
+  return jsonresp;
+  
+}
+
+
+
+
+
+
+
+
+
+async function main(){
+  
+  let shuffled_deck =  await shuflleDeck();
+  
+  const deck_id = shuffled_deck["deck_id"];
+    
+  const cards = await drawCardFromDeck(deck_id,15);
+  console.log(cards)
+  
+  let sorted_cards = [];
+  for(const card of cards.cards){
+    console.log(card.code)
+    sorted_cards.push([card.code,card.value,card.suit]);
+    //console.log(card["cards"]["code"])
+  }
+  
+  console.log(sorted_cards)
+  
+  
+  
+  
+  
+  
+  
+  
+  //console.log(shuffled_deck)
+}
+
+main();
 
 
 
