@@ -43,6 +43,38 @@ async function drawCardFromDeck(deck_id,deck_count=2){
 }
 
 
+const CVALS = ["2","3","4","5","6","7","8","9","10","JACK","QUEEN","KING","ACE"];
+let clookup = {};
+for(let i=0;i<CVALS.length;i++){
+  clookup[CVALS[i]] = i;
+}
+
+const SUITS = ["HEARTS","DIAMONDS","SPADES","CLUBS"];
+let slookup = {};
+for(let i=0;i<SUITS.length;i++){
+  slookup[SUITS[i]] = i;  
+}
+
+  
+function vlookup(v1,v2,s1,s2){
+   
+    if(clookup[v1] > clookup[v2]){
+      return 1;
+    }else{
+      if(clookup[v1] < clookup[v2]){
+        return -1;
+      }else{
+        
+        if(slookup[s1] >= slookup[s2]){
+          return 1;
+        }else{
+          return -1;
+        }
+      }
+    }
+}
+
+
 
 
 
@@ -56,24 +88,16 @@ async function main(){
   
   const deck_id = shuffled_deck["deck_id"];
     
-  const cards = await drawCardFromDeck(deck_id,15);
+  const cards = await drawCardFromDeck(deck_id,54);
   console.log(cards)
   
   let sorted_cards = [];
   for(const card of cards.cards){
     console.log(card.code)
     sorted_cards.push([card.code,card.value,card.suit]);
-    //console.log(card["cards"]["code"])
   }
   
-  console.log(sorted_cards)
-  
-  
-  
-  
-  
-  
-  
+  sorted_cards.sort((a,b)=> vlookup(a[1],b[1],a[2],b[2]));
   
   //console.log(shuffled_deck)
 }
