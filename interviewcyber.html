@@ -3,14 +3,26 @@
 <script>
 
 
-let deck_count = deck_count;
 
-let url = "https://www.deckofcardsapi.com/api/deck/new/shuffle/?" + deck_count;
+async function getDeck(deck_count=1){
+  
+  
+  let url = "https://www.deckofcardsapi.com/api/deck/new/shuffle/?" + deck_count;
+  
+  try{
+    let resp  = await fetch(url);
+  }catch{
+    console.log(e)
+  }
+    
+  let jsonresp = await resp.json()
+  console.log(jsonresp["success"])
+  
+  return resp;
+    
+}
 
-fetch(url)
-.then(response => response.json( ))
-.then(json => console.log(response.json( ))
-
+let resp =  getDeck();
 
 
 
