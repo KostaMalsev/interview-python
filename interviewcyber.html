@@ -77,11 +77,6 @@ function vlookup(v1,v2,s1,s2){
 
 
 
-
-
-
-
-
 async function main(){
   
   let shuffled_deck =  await shuflleDeck();
@@ -93,7 +88,6 @@ async function main(){
   
   let sorted_cards = [];
   for(const card of cards.cards){
-    console.log(card.code)
     sorted_cards.push([card.code,card.value,card.suit]);
   }
   
